@@ -172,10 +172,15 @@ a {
 
   & .page-header {
     width: $pageWidth;
-    margin: $topSpacing auto 0 auto;
-    @media all and (max-width: $fullPageWidth) {
+    // margin: $topSpacing auto 0 auto;
+    @media (max-width: $fullPageWidth) {
       width: initial;
       margin-top: 2rem;
+    }
+
+    @media (max-width: $tabletBreakpoint) and (max-width: $mobileBreakpoint) {
+      width: initial;
+      margin-top: 0;
     }
   }
 
