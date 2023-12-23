@@ -2,7 +2,7 @@
 
 header {
   display: block;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 #links-header {
@@ -12,10 +12,6 @@ header {
   font-size: 1.2em;
   justify-content: space-between;
   margin: 0 0.2em;
-
-  span {
-    margin-top: 0.75em;
-  }
 
   img {
     height: 1.5em;
@@ -35,15 +31,22 @@ header {
 }
 
 @media (max-width: $mobileBreakpoint) {
-  #links-header > * {
-    width: calc(33.33% - 0.67em); /* 33.33% width with some gap */
+  header {
+    display: block;
+    margin-top: 0.5rem;
   }
 
-  #links-header > *:nth-child(3n-1) {
-    text-align: center;
+  hr {
+    margin: 0.4rem 0 !important;
   }
 
-  #links-header > *:nth-child(3n) {
-    text-align: right;
+  #links-header {
+    width: 200%;
+    margin: 0 0;
+  }
+
+  #links-container {
+    width: 100%;
+    overflow-x: scroll;
   }
 }

@@ -8,7 +8,7 @@ interface Options {
 export default (() => {
   function LinksHeader() {
     return (
-      <div>
+      <div id="links-container">
         <div id="links-header">
           <span>
             <img src="/static/icons8-blog-96.png"></img>
