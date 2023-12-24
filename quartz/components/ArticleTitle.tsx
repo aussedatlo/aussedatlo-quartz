@@ -1,17 +1,23 @@
 import { QuartzComponentConstructor, QuartzComponentProps } from "./types"
+import style from "./styles/articleTitle.scss"
 
 function ArticleTitle({ fileData, displayClass }: QuartzComponentProps) {
   const title = fileData.frontmatter?.title
+  const githubPath = "https://github.com/aussedatlo/aussedatlo-notes/commits/main"
+  const githubFilePath = fileData.filePath?.replace("content", "")
   if (title) {
-    return <h1 class={`article-title ${displayClass ?? ""}`}>{title}</h1>
+    return (
+      <div class={`article-title-container ${displayClass ?? ""}`}>
+        <h1 class={"article-title"}>{title}</h1>
+        <a href={`${githubPath}${githubFilePath}`} target="_blank">
+          <div class={"article-title-history "}> 📆 File History</div>
+        </a>
+      </div>
+    )
   } else {
     return null
   }
 }
-ArticleTitle.css = `
-.article-title {
-  margin: 2rem 0 0 0;
-}
-`
 
+ArticleTitle.css = style
 export default (() => ArticleTitle) satisfies QuartzComponentConstructor
