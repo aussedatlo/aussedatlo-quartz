@@ -1,0 +1,28 @@
+@use "../../styles/variables.scss" as *;
+
+.article-title {
+  flex: 1;
+}
+
+.article-title-container {
+  margin: 2rem 0 0 0;
+  display: flex;
+  align-items: end;
+}
+
+.article-title-history {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+
+@media (max-width: $mobileBreakpoint) {
+  .article-title-container {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .article-title-history {
+  }
+}
