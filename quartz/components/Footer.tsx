@@ -13,6 +13,15 @@ export default ((opts?: Options) => {
     return (
       <footer class={`${displayClass ?? ""}`}>
         <hr />
+        <script
+          src="https://utteranc.es/client.js"
+          repo="aussedatlo/aussedatlo-quartz"
+          issue-term="pathname"
+          theme="github-light"
+          crossorigin="anonymous"
+          async
+        ></script>
+        <hr />
         <p>
           Made with ❤️ using <a href="https://quartz.jzhao.xyz/">Quartz</a> and{" "}
           <a href="https://obsidian.md/">Obsidian</a> © {year}
