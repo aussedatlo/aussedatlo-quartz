@@ -8,5 +8,6 @@ export declare global {
   }
   interface Window {
     spaNavigate(url: URL, isBack: boolean = false)
+    plausibleOptions?: { apiHost?: string }
   }
 }

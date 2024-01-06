@@ -87,7 +87,7 @@ function addGlobalPageResources(
       function gtag() { dataLayer.push(arguments); }
       gtag("js", new Date());
       gtag("config", "${tagId}", { send_page_view: false });
-  
+
       document.addEventListener("nav", () => {
         gtag("event", "page_view", {
           page_title: document.title,
@@ -95,6 +95,10 @@ function addGlobalPageResources(
         });
       });`)
   } else if (cfg.analytics?.provider === "plausible") {
+    if (cfg.analytics.apiHost)
+      componentResources.afterDOMLoaded.push(`
+      window.plausibleOptions = {apiHost: "${cfg.analytics.apiHost}"}
+      `)
     componentResources.afterDOMLoaded.push(plausibleScript)
   } else if (cfg.analytics?.provider === "umami") {
     componentResources.afterDOMLoaded.push(`
@@ -102,7 +106,7 @@ function addGlobalPageResources(
       umamiScript.src = "https://analytics.umami.is/script.js"
       umamiScript.setAttribute("data-website-id", "${cfg.analytics.websiteId}")
       umamiScript.async = true
-  
+
       document.head.appendChild(umamiScript)
     `)
   }
