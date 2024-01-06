@@ -36,11 +36,6 @@ export default (() => {
         {js
           .filter((resource) => resource.loadTime === "beforeDOMReady")
           .map((res) => JSResourceToScriptElement(res, true))}
-        <script
-          defer
-          data-domain="aussedatlo.me"
-          src="https://plausible.aussedatlo.me/js/script.js"
-        ></script>
       </head>
     )
   }

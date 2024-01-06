@@ -8,6 +8,7 @@ const config: QuartzConfig = {
     enablePopovers: true,
     analytics: {
       provider: "plausible",
+      host: "https://plausible.aussedatlo.me",
     },
     baseUrl: "aussedatlo.me",
     ignorePatterns: ["private", "templates", ".obsidian", "drawings/**/*.md"],
