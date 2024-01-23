@@ -11,7 +11,7 @@ const config: QuartzConfig = {
       host: "https://plausible.aussedatlo.me",
     },
     baseUrl: "aussedatlo.me",
-    ignorePatterns: ["private", "templates", ".obsidian", "drawings/**/*.md"],
+    ignorePatterns: ["private", "templates", ".obsidian", "ressources/**/*.md"],
     defaultDateType: "created",
     theme: {
       typography: {
