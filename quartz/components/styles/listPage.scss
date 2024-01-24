@@ -10,9 +10,6 @@ li.section-li {
   margin-bottom: 1em;
 
   & > .section {
-    display: grid;
-    grid-template-columns: 6em 3fr 1fr;
-
     @media all and (max-width: $mobileBreakpoint) {
       & > .tags {
         display: none;
@@ -27,6 +24,21 @@ li.section-li {
       margin: 0;
       flex-basis: 6em;
       opacity: 0.6;
+    }
+
+    & > .icon {
+      margin-right: 0.5em;
+    }
+
+    & > .divider {
+      margin-top: 1em;
+      margin-bottom: 1em;
+      border-top: 1px dotted var(--lightgray);
+    }
+
+    & > .tags {
+      margin-top: 0.5em;
+      line-height: 1em;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { FullSlug, resolveRelative } from "../util/path"
+import { FullSlug, resolveRelative, simplifySlug } from "../util/path"
 import { QuartzPluginData } from "../plugins/vfile"
 import { Date, getDate } from "./Date"
 import { QuartzComponentProps } from "./types"
@@ -37,37 +37,35 @@ export function PageList({ cfg, fileData, allFiles, limit }: Props) {
 
   return (
     <ul class="section-ul">
-      {list.map((page) => {
-        const title = page.frontmatter?.title
+      {list.map((page, index) => {
+        const desc = page.frontmatter?.description ?? "No description available"
         const tags = page.frontmatter?.tags ?? []
+        const icon = page.frontmatter?.icon ?? "✨"
+        const slug = simplifySlug(page.slug!).replace("posts/", "")
 
         return (
           <li class="section-li">
             <div class="section">
-              {page.dates && (
-                <p class="meta">
-                  <Date date={getDate(cfg, page)!} />
-                </p>
-              )}
-              <div class="desc">
-                <h3>
-                  <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
-                    {title}
-                  </a>
-                </h3>
+              <span class="icon">{icon}</span>
+              <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
+                {slug}
+              </a>
+              :
+              <div class="meta">
+                <Date date={getDate(cfg, page)!} />
               </div>
-              <ul class="tags">
+              <div>{desc}</div>
+              <div class="tags">
                 {tags.map((tag) => (
-                  <li>
-                    <a
-                      class="internal tag-link"
-                      href={resolveRelative(fileData.slug!, `tags/${tag}` as FullSlug)}
-                    >
-                      #{tag}
-                    </a>
-                  </li>
+                  <a
+                    class="internal tag-link"
+                    href={resolveRelative(fileData.slug!, `tags/${tag}` as FullSlug)}
+                  >
+                    #{tag}
+                  </a>
                 ))}
-              </ul>
+              </div>
+              {list.length - 1 > index ? <div class="divider" /> : <></>}
             </div>
           </li>
         )

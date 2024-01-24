@@ -7,6 +7,7 @@ import { FullSlug, RelativeURL, joinSegments, normalizeHastElement } from "../ut
 import { visit } from "unist-util-visit"
 import { Root, Element, ElementContent } from "hast"
 import { QuartzPluginData } from "../plugins/vfile"
+import { PageList } from "./PageList"
 
 interface RenderComponents {
   head: QuartzComponent
@@ -214,6 +215,31 @@ export function renderPage(
                 </div>
               </div>
               <Content {...componentData} />
+
+              {componentData.fileData.relativePath === "index.md" && (
+                <div>
+                  {
+                    <>
+                      <PageList
+                        {...componentData}
+                        allFiles={componentData.allFiles
+                          .filter((value) => value.relativePath?.startsWith("posts/"))
+                          .reverse()
+                          .slice(0, 5)}
+                      />
+                      <p class="see-more">
+                        <a href={"/posts"}>
+                          See{" "}
+                          {componentData.allFiles.filter(
+                            (value) => value.relativePath?.startsWith("posts/"),
+                          ).length - 5}{" "}
+                          more →
+                        </a>
+                      </p>
+                    </>
+                  }
+                </div>
+              )}
             </div>
             {RightComponent}
           </Body>
