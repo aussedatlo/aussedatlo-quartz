@@ -220,6 +220,16 @@ export function renderPage(
                   ))}
                 </div>
               </div>
+
+              {componentData.fileData.filePath?.includes("posts/") && (
+                <img
+                  src={
+                    componentData.fileData.slug?.replace("posts", "/ressources") + "/img-banner.jpg"
+                  }
+                  alt={componentData.fileData.slug}
+                />
+              )}
+
               <Content {...componentData} />
 
               <p class="see-more">

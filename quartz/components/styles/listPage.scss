@@ -6,14 +6,66 @@ ul.section-ul {
   padding-left: 0;
 }
 
-li.section-li {
+.divider {
+  margin-top: 1em;
   margin-bottom: 1em;
+  border-top: 1px dotted var(--lightgray);
+}
+
+li.section-li {
+  display: flex;
+  align-items: center;
+
+  & > .container-image {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 8em;
+    margin-right: 1em;
+    border-radius: 5px;
+
+    @media all and (max-width: $mobileBreakpoint) {
+      display: none;
+    }
+
+    & > .centered-image {
+      margin: 0;
+      object-position: center;
+      object-fit: cover;
+      transform: scale(1);
+    }
+  }
 
   & > .section {
-    @media all and (max-width: $mobileBreakpoint) {
-      & > .tags {
-        display: none;
+    align-self: stretch;
+    flex-direction: column;
+    display: flex;
+    flex: 1;
+
+    & > .container-image-mobile {
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      @media all and (max-width: $mobileBreakpoint) {
+        display: flex;
       }
+
+      & > .centered-image {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        width: 100%;
+      }
+
+    }
+
+    & > .description {
+      flex: 1;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+
+    & > div > .icon {
+      margin-right: 0.5em;
     }
 
     & > .desc > h3 > a {
@@ -22,21 +74,11 @@ li.section-li {
 
     & > .meta {
       margin: 0;
-      flex-basis: 6em;
       opacity: 0.6;
     }
 
-    & > .icon {
-      margin-right: 0.5em;
-    }
-
-    & > .divider {
-      margin-top: 1em;
-      margin-bottom: 1em;
-      border-top: 1px dotted var(--lightgray);
-    }
-
     & > .tags {
+      align-self: flex-end;
       margin-top: 0.5em;
       line-height: 1em;
     }

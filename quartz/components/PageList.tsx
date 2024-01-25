@@ -41,33 +41,49 @@ export function PageList({ cfg, fileData, allFiles, limit }: Props) {
         const desc = page.frontmatter?.description ?? "No description available"
         const tags = page.frontmatter?.tags ?? []
         const icon = page.frontmatter?.icon ?? "✨"
-        const slug = simplifySlug(page.slug!).replace("posts/", "")
+        const title = page.frontmatter?.title ?? ""
+        const slug = simplifySlug(page.slug!).replace("posts/", "").replace("/posts/", "")
+        const img = "/ressources/" + slug + "/img-small.jpg"
 
         return (
-          <li class="section-li">
-            <div class="section">
-              <span class="icon">{icon}</span>
-              <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
-                {slug}
+          <>
+            <li class="section-li">
+              <a class="container-image" href={resolveRelative(fileData.slug!, page.slug!)}>
+                <img src={img} class="centered-image" alt={slug} />
               </a>
-              :
-              <div class="meta">
-                <Date date={getDate(cfg, page)!} />
-              </div>
-              <div>{desc}</div>
-              <div class="tags">
-                {tags.map((tag) => (
-                  <a
-                    class="internal tag-link"
-                    href={resolveRelative(fileData.slug!, `tags/${tag}` as FullSlug)}
-                  >
-                    #{tag}
+              <div class="section">
+                <div>
+                  <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
+                    {title}
                   </a>
-                ))}
+                </div>
+                <div class="meta">
+                  <Date date={getDate(cfg, page)!} />
+                </div>
+                <a
+                  class="container-image-mobile"
+                  href={resolveRelative(fileData.slug!, page.slug!)}
+                >
+                  <img src={img} class="centered-image" alt={slug} />
+                </a>
+                <div class="description">
+                  <span class="icon">{icon}</span>
+                  {desc}
+                </div>
+                <div class="tags">
+                  {tags.map((tag) => (
+                    <a
+                      class="internal tag-link"
+                      href={resolveRelative(fileData.slug!, `tags/${tag}` as FullSlug)}
+                    >
+                      #{tag}
+                    </a>
+                  ))}
+                </div>
               </div>
-              {list.length - 1 > index ? <div class="divider" /> : <></>}
-            </div>
-          </li>
+            </li>
+            {list.length - 1 > index ? <div class="divider" /> : <></>}
+          </>
         )
       })}
     </ul>

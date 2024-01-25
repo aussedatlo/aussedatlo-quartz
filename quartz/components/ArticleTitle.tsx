@@ -1,5 +1,6 @@
 import { QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import style from "./styles/articleTitle.scss"
+import { simplifySlug } from "../util/path"
 
 function ArticleTitle({ fileData, displayClass }: QuartzComponentProps) {
   const title = fileData.frontmatter?.title
