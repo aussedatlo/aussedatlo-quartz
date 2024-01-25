@@ -521,3 +521,12 @@ ol.overflow {
     margin-right: 1em;
   }
 }
+
+.all-tags {
+  display: flex;
+  flex-wrap: wrap;
+
+  & > a {
+    margin: 0.3em !important;
+  }
+}

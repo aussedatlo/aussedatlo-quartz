@@ -3,7 +3,13 @@ import { QuartzComponent, QuartzComponentProps } from "./types"
 import HeaderConstructor from "./Header"
 import BodyConstructor from "./Body"
 import { JSResourceToScriptElement, StaticResources } from "../util/resources"
-import { FullSlug, RelativeURL, joinSegments, normalizeHastElement } from "../util/path"
+import {
+  FullSlug,
+  RelativeURL,
+  joinSegments,
+  normalizeHastElement,
+  resolveRelative,
+} from "../util/path"
 import { visit } from "unist-util-visit"
 import { Root, Element, ElementContent } from "hast"
 import { QuartzPluginData } from "../plugins/vfile"
@@ -234,9 +240,33 @@ export function renderPage(
               </p>
 
               {componentData.fileData.relativePath === "index.md" && (
+                <>
+                  <h1>All Tags</h1>
+                  <div class="all-tags">
+                    {[
+                      ...new Set(
+                        componentData.allFiles.reduce(
+                          (prev: string[], curr) => [...prev, ...(curr.frontmatter?.tags ?? [])],
+                          [],
+                        ),
+                      ),
+                    ].map((tag) => (
+                      <a
+                        class="internal tag-link"
+                        href={resolveRelative("/" as FullSlug, `tags/${tag}` as FullSlug)}
+                      >
+                        #{tag}
+                      </a>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {componentData.fileData.relativePath === "index.md" && (
                 <div>
                   {
                     <>
+                      <h1>Latest Posts</h1>
                       <PageList
                         {...componentData}
                         allFiles={componentData.allFiles
