@@ -71,26 +71,37 @@ export const FolderPage: QuartzEmitterPlugin<FullPageLayout> = (userOpts) => {
 
       for (const folder of folders) {
         const slug = joinSegments(folder, "index") as FullSlug
-        const externalResources = pageResources(pathToRoot(slug), resources)
-        const [tree, file] = folderDescriptions[folder]
-        const componentData: QuartzComponentProps = {
-          fileData: file.data,
-          externalResources,
-          cfg,
-          children: [],
-          tree,
-          allFiles,
+        const allFolderFiles = allFiles.filter((file) => file.slug?.startsWith(folder))
+        const nbPages = Math.ceil(allFolderFiles.length / 5)
+
+        for (let index = 0; index < nbPages; index++) {
+          const [tree, file] = folderDescriptions[folder]
+          const slugCustom = index === 0 ? slug : (`${slug}-${index}` as FullSlug)
+          const externalResources = pageResources(pathToRoot(slugCustom), resources)
+          const startIndex = index * 5
+          const endIndex = startIndex + 5
+          const files = [...allFolderFiles].reverse().slice(startIndex, endIndex)
+
+          const componentData: QuartzComponentProps = {
+            fileData: file.data,
+            externalResources,
+            cfg,
+            children: [],
+            tree,
+            allFiles: files,
+            nbPages,
+            currentPage: index,
+          }
+
+          const content = renderPage(slugCustom, componentData, opts, externalResources)
+          const fp = await emit({
+            content,
+            slug: slugCustom,
+            ext: ".html",
+          })
+
+          fps.push(fp)
         }
-
-        const content = renderPage(slug, componentData, opts, externalResources)
-        const fp = await write({
-          ctx,
-          content,
-          slug,
-          ext: ".html",
-        })
-
-        fps.push(fp)
       }
       return fps
     },

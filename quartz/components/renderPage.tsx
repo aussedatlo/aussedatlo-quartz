@@ -216,6 +216,23 @@ export function renderPage(
               </div>
               <Content {...componentData} />
 
+              <p class="see-more">
+                {componentData.currentPage > 0 && (
+                  <a
+                    href={
+                      componentData.currentPage == 1
+                        ? "/posts/"
+                        : "/posts/index-" + (componentData.currentPage - 1)
+                    }
+                  >
+                    ← Next posts
+                  </a>
+                )}
+                {componentData.currentPage < componentData.nbPages - 1 && (
+                  <a href={"/posts/index-" + (componentData.currentPage + 1)}>Previous posts →</a>
+                )}
+              </p>
+
               {componentData.fileData.relativePath === "index.md" && (
                 <div>
                   {

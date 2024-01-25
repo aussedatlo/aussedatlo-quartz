@@ -515,4 +515,9 @@ ol.overflow {
 .see-more {
   display: flex;
   justify-content:center;
+
+  & > a {
+    margin-left: 1em;
+    margin-right: 1em;
+  }
 }
