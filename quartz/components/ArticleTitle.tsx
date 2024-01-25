@@ -12,9 +12,12 @@ function ArticleTitle({ fileData, displayClass }: QuartzComponentProps) {
         <h1 class={"article-title"}>
           {icon} {title}
         </h1>
-        <a href={`${githubPath}${githubFilePath}`} target="_blank">
-          <div class={"article-title-history "}> 📆 File History</div>
-        </a>
+        {}
+        {fileData.filePath && (
+          <a href={`${githubPath}${githubFilePath}`} target="_blank">
+            <div class={"article-title-history "}> 📆 File History</div>
+          </a>
+        )}
       </div>
     )
   } else {
