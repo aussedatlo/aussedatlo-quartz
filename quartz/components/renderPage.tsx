@@ -241,51 +241,51 @@ export function renderPage(
 
               {componentData.fileData.relativePath === "index.md" && (
                 <>
-                  <h1>All Tags</h1>
-                  <div class="all-tags">
-                    {[
-                      ...new Set(
-                        componentData.allFiles.reduce(
-                          (prev: string[], curr) => [...prev, ...(curr.frontmatter?.tags ?? [])],
-                          [],
-                        ),
-                      ),
-                    ].map((tag) => (
-                      <a
-                        class="internal tag-link"
-                        href={resolveRelative("/" as FullSlug, `tags/${tag}` as FullSlug)}
-                      >
-                        #{tag}
-                      </a>
-                    ))}
-                  </div>
+                  <h1>Recent Posts</h1>
+                  <PageList
+                    {...componentData}
+                    allFiles={componentData.allFiles
+                      .filter((value) => value.relativePath?.startsWith("posts/"))
+                      .reverse()
+                      .slice(0, 5)}
+                  />
+                  <p class="see-more">
+                    <a href={"/posts"}>
+                      See{" "}
+                      {componentData.allFiles.filter(
+                        (value) => value.relativePath?.startsWith("posts/"),
+                      ).length - 5}{" "}
+                      more →
+                    </a>
+                  </p>
                 </>
               )}
 
               {componentData.fileData.relativePath === "index.md" && (
-                <div>
-                  {
-                    <>
-                      <h1>Latest Posts</h1>
-                      <PageList
-                        {...componentData}
-                        allFiles={componentData.allFiles
-                          .filter((value) => value.relativePath?.startsWith("posts/"))
-                          .reverse()
-                          .slice(0, 5)}
-                      />
-                      <p class="see-more">
-                        <a href={"/posts"}>
-                          See{" "}
-                          {componentData.allFiles.filter(
-                            (value) => value.relativePath?.startsWith("posts/"),
-                          ).length - 5}{" "}
-                          more →
+                <>
+                  <h1>Tags</h1>
+                  <div className="all-tags">
+                    {Object.entries(
+                      componentData.allFiles.reduce((tagCount: { [tag: string]: number }, curr) => {
+                        const tags = curr.frontmatter?.tags ?? []
+                        tags.forEach((tag) => {
+                          tagCount[tag] = (tagCount[tag] || 0) + 1
+                        })
+                        return tagCount
+                      }, {}),
+                    )
+                      .sort((a, b) => b[1] - a[1]) // Sort tags by occurrence count in descending order
+                      .map(([tag, count]) => (
+                        <a
+                          className="internal tag-link"
+                          href={resolveRelative("/" as FullSlug, `tags/${tag}` as FullSlug)}
+                          key={tag}
+                        >
+                          #{tag} ({count})
                         </a>
-                      </p>
-                    </>
-                  }
-                </div>
+                      ))}
+                  </div>
+                </>
               )}
             </div>
             {RightComponent}
