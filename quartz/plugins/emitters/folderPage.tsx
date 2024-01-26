@@ -94,7 +94,8 @@ export const FolderPage: QuartzEmitterPlugin<FullPageLayout> = (userOpts) => {
           }
 
           const content = renderPage(slugCustom, componentData, opts, externalResources)
-          const fp = await emit({
+          const fp = await write({
+            ctx,
             content,
             slug: slugCustom,
             ext: ".html",
