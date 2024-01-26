@@ -78,8 +78,8 @@ export const FolderPage: QuartzEmitterPlugin<FullPageLayout> = (userOpts) => {
           const [tree, file] = folderDescriptions[folder]
           const slugCustom = index === 0 ? slug : (`${slug}-${index}` as FullSlug)
           const externalResources = pageResources(pathToRoot(slugCustom), resources)
-          const startIndex = index * 5
-          const endIndex = startIndex + 5
+          const startIndex = index * 8
+          const endIndex = startIndex + 8
           const files = [...allFolderFiles].reverse().slice(startIndex, endIndex)
 
           const componentData: QuartzComponentProps = {

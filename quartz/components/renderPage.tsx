@@ -241,11 +241,11 @@ export function renderPage(
                         : "/posts/index-" + (componentData.currentPage - 1)
                     }
                   >
-                    ← Next posts
+                    ← Next
                   </a>
                 )}
                 {componentData.currentPage < componentData.nbPages - 1 && (
-                  <a href={"/posts/index-" + (componentData.currentPage + 1)}>Previous posts →</a>
+                  <a href={"/posts/index-" + (componentData.currentPage + 1)}>Previous →</a>
                 )}
               </p>
 
@@ -257,14 +257,14 @@ export function renderPage(
                     allFiles={componentData.allFiles
                       .filter((value) => value.relativePath?.startsWith("posts/"))
                       .reverse()
-                      .slice(0, 5)}
+                      .slice(0, 4)}
                   />
                   <p class="see-more">
                     <a href={"/posts"}>
                       See{" "}
                       {componentData.allFiles.filter(
                         (value) => value.relativePath?.startsWith("posts/"),
-                      ).length - 5}{" "}
+                      ).length - 4}{" "}
                       more →
                     </a>
                   </p>
