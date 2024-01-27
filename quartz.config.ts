@@ -11,6 +11,10 @@ const config: QuartzConfig = {
       provider: "plausible",
       host: "https://plausible.aussedatlo.me",
     },
+    utterances: {
+      repo: "aussedatlo/aussedatlo-quartz",
+      theme: "github-light",
+    },
     baseUrl: "aussedatlo.me",
     ignorePatterns: ["private", "templates", ".obsidian", "ressources/**/*.md"],
     defaultDateType: "created",

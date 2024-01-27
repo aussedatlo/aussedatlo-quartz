@@ -127,6 +127,20 @@ function addGlobalPageResources(
     `)
   }
 
+  if (cfg.utterances.repo) {
+    componentResources.afterDOMLoaded.push(`
+      const utterancesScript = document.createElement("script")
+      utterancesScript.src = "https://utteranc.es/client.js"
+      utterancesScript.setAttribute("repo", "${cfg.utterances.repo}")
+      utterancesScript.setAttribute("theme", "${cfg.utterances.theme ?? "dark"}")
+      utterancesScript.setAttribute("issue-term", "pathname")
+      utterancesScript.setAttribute("crossorigin", "anonymous")
+      utterancesScript.async = true
+
+      window.document.getElementsByClassName("center")[0].appendChild(utterancesScript)
+    `)
+  }
+
   if (cfg.enableSPA) {
     componentResources.afterDOMLoaded.push(spaRouterScript)
   } else {

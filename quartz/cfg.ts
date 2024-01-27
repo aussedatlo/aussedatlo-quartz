@@ -18,6 +18,8 @@ export type Analytics =
       websiteId: string
     }
 
+export type Utterances = { repo?: string; theme?: string }
+
 export interface GlobalConfiguration {
   pageTitle: string
   /** Whether to enable single-page-app style rendering. this prevents flashes of unstyled content and improves smoothness of Quartz */
@@ -37,6 +39,7 @@ export interface GlobalConfiguration {
   theme: Theme
   /** Max pages per tag/folder index page */
   maxPerPage: number
+  utterances: Utterances
 }
 
 export interface QuartzConfig {
