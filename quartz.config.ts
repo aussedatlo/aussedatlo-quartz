@@ -3,14 +3,15 @@ import * as Plugin from "./quartz/plugins"
 
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "🪴 Quartz 4.0",
+    pageTitle: "aussedatlo.me",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
       provider: "plausible",
+      host: "https://plausible.aussedatlo.me",
     },
-    baseUrl: "quartz.jzhao.xyz",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    baseUrl: "aussedatlo.me",
+    ignorePatterns: ["private", "templates", ".obsidian", "ressources/**/*.md"],
     defaultDateType: "created",
     theme: {
       typography: {
@@ -20,23 +21,23 @@ const config: QuartzConfig = {
       },
       colors: {
         lightMode: {
-          light: "#faf8f8",
-          lightgray: "#e5e5e5",
-          gray: "#b8b8b8",
-          darkgray: "#4e4e4e",
-          dark: "#2b2b2b",
-          secondary: "#284b63",
-          tertiary: "#84a59d",
+          light: "#ebebec",
+          lightgray: "#d4d4d4",
+          gray: "#9ca3af",
+          darkgray: "#374151",
+          dark: "#1f2937",
+          secondary: "#1c64f2",
+          tertiary: "#d99706",
           highlight: "rgba(143, 159, 169, 0.15)",
         },
         darkMode: {
-          light: "#161618",
-          lightgray: "#393639",
-          gray: "#646464",
+          light: "#1f2937",
+          lightgray: "#374151",
+          gray: "#9ca3af",
           darkgray: "#d4d4d4",
           dark: "#ebebec",
-          secondary: "#7b97aa",
-          tertiary: "#84a59d",
+          secondary: "#38bdf8",
+          tertiary: "#fbbf24",
           highlight: "rgba(143, 159, 169, 0.15)",
         },
       },
