@@ -1,4 +1,4 @@
-import { FullSlug, resolveRelative } from "../util/path"
+import { FullSlug, resolveRelative, simplifySlug } from "../util/path"
 import { QuartzPluginData } from "../plugins/vfile"
 import { Date, getDate } from "./Date"
 import { QuartzComponentProps } from "./types"
@@ -37,39 +37,47 @@ export function PageList({ cfg, fileData, allFiles, limit }: Props) {
 
   return (
     <ul class="section-ul">
-      {list.map((page) => {
-        const title = page.frontmatter?.title
+      {list.map((page, index) => {
+        const desc = page.frontmatter?.description ?? "No description available"
         const tags = page.frontmatter?.tags ?? []
+        const icon = page.frontmatter?.icon ?? "✨"
+        const title = page.frontmatter?.title ?? ""
+        const slug = simplifySlug(page.slug!).replace("posts/", "").replace("/posts/", "")
+        const img = "/ressources/" + page.relativePath?.replace(".md", "") + "/img-small.jpg"
 
         return (
-          <li class="section-li">
-            <div class="section">
-              {page.dates && (
-                <p class="meta">
-                  <Date date={getDate(cfg, page)!} />
-                </p>
-              )}
-              <div class="desc">
-                <h3>
-                  <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
+          <>
+            <li class="section-li">
+              <a class="container-image" href={"/" + page.slug!}>
+                <img src={img} class="centered-image" alt={slug} />
+              </a>
+              <div class="section">
+                <div>
+                  <a href={"/" + page.slug!} class="internal">
                     {title}
                   </a>
-                </h3>
-              </div>
-              <ul class="tags">
-                {tags.map((tag) => (
-                  <li>
-                    <a
-                      class="internal tag-link"
-                      href={resolveRelative(fileData.slug!, `tags/${tag}` as FullSlug)}
-                    >
+                </div>
+                <div class="meta">
+                  <Date date={getDate(cfg, page)!} />
+                </div>
+                <a class="container-image-mobile" href={"/" + page.slug!}>
+                  <img src={img} class="centered-image" alt={slug} />
+                </a>
+                <div class="description">
+                  <span class="icon">{icon}</span>
+                  {desc}
+                </div>
+                <div class="tags">
+                  {tags.map((tag) => (
+                    <a class="internal tag-link" href={`/tags/${tag}` as FullSlug}>
                       #{tag}
                     </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </li>
+                  ))}
+                </div>
+              </div>
+            </li>
+            {list.length - 1 > index ? <div class="divider" /> : <></>}
+          </>
         )
       })}
     </ul>
