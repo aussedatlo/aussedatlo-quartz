@@ -1,0 +1,52 @@
+@use "../../styles/variables.scss" as *;
+
+header {
+  display: block;
+  margin-top: 2rem;
+}
+
+#links-header {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1em;
+  font-size: 1.2em;
+  justify-content: space-between;
+  margin: 0 0.2em;
+
+  img {
+    height: 1.5em;
+    margin: 0 0.3em 0 0;
+    vertical-align: sub;
+  }
+
+  a {
+    color: var(--dark);
+  }
+
+  hr {
+    background-color: var(--secondary);
+    border-top: 1px var(--secondary) solid;
+    margin-top: 1rem
+  }
+}
+
+@media (max-width: $mobileBreakpoint) {
+  header {
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  hr {
+    margin: 0.4rem 0 !important;
+  }
+
+  #links-header {
+    width: 200%;
+    margin: 0 0;
+  }
+
+  #links-container {
+    width: 100%;
+    overflow-x: scroll;
+  }
+}
