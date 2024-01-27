@@ -538,3 +538,12 @@ header {
   display: block;
   margin-top: 1rem;
 }
+
+.all-tags {
+  display: flex;
+  flex-wrap: wrap;
+
+  & > a {
+    margin: 0.3em !important;
+  }
+}

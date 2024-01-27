@@ -45,31 +45,23 @@ function TagContent(props: QuartzComponentProps) {
         </article>
         <p>Found {tags.length} total tags.</p>
         <div>
-          {tags.map((tag) => {
-            const pages = tagItemMap.get(tag)!
-            const listProps = {
-              ...props,
-              allFiles: pages,
-            }
-
-            const contentPage = allFiles.filter((file) => file.slug === `tags/${tag}`)[0]
-            const content = contentPage?.description
-            return (
-              <div>
-                <h2>
-                  <a class="internal tag-link" href={`../tags/${tag}`}>
-                    #{tag}
-                  </a>
-                </h2>
-                {content && <p>{content}</p>}
-                <p>
-                  {pluralize(pages.length, "item")} with this tag.{" "}
-                  {pages.length > numPages && `Showing first ${numPages}.`}
-                </p>
-                <PageList limit={numPages} {...listProps} />
-              </div>
+          <div className="all-tags">
+            {Object.entries(
+              allFiles.reduce((tagCount: { [tag: string]: number }, curr) => {
+                const tags = curr.frontmatter?.tags ?? []
+                tags.forEach((tag) => {
+                  tagCount[tag] = (tagCount[tag] || 0) + 1
+                })
+                return tagCount
+              }, {}),
             )
-          })}
+              .sort((a, b) => b[1] - a[1]) // Sort tags by occurrence count in descending order
+              .map(([tag, count]) => (
+                <a className="internal tag-link" href={`/tags/${tag}`} key={tag}>
+                  #{tag} ({count})
+                </a>
+              ))}
+          </div>
         </div>
       </div>
     )
