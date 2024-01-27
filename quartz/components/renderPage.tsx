@@ -214,7 +214,24 @@ export function renderPage(
                 </div>
               </div>
               <Content {...componentData} />
+
+              {componentData.fileData.filePath && componentData.cfg.utterances?.repo ? (
+                <div>
+                  <hr />
+                  <script
+                    src="https://utteranc.es/client.js"
+                    repo={componentData.cfg.utterances.repo}
+                    issue-term="pathname"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async
+                  />
+                </div>
+              ) : (
+                <div></div>
+              )}
             </div>
+
             {RightComponent}
           </Body>
           <Footer {...componentData} />
