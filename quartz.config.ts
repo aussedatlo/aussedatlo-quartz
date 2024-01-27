@@ -6,6 +6,7 @@ const config: QuartzConfig = {
     pageTitle: "aussedatlo.me",
     enableSPA: true,
     enablePopovers: true,
+    maxPerPage: 3,
     analytics: {
       provider: "plausible",
       host: "https://plausible.aussedatlo.me",

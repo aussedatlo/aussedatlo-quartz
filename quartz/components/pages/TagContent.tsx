@@ -75,6 +75,7 @@ function TagContent(props: QuartzComponentProps) {
     )
   } else {
     const pages = allPagesWithTag(tag)
+    const { index, nbPages, nb } = props
     const listProps = {
       ...props,
       allFiles: pages,
@@ -83,10 +84,39 @@ function TagContent(props: QuartzComponentProps) {
     return (
       <div class="popover-hint">
         <article>{content}</article>
-        <p>{pluralize(pages.length, "item")} with this tag.</p>
+        <p>{pluralize(nb, "item")} with this tag.</p>
         <div>
           <PageList {...listProps} />
         </div>
+        {nbPages > 0 && (
+          <div class="see-more">
+            {index === 0 && <a />}
+            {index === 1 && (
+              <a href={"../"} class="previous">
+                Previous
+              </a>
+            )}
+            {index > 1 && index <= nbPages && (
+              <a href={index} class="previous">
+                Previous
+              </a>
+            )}
+            <div>
+              {index + 1} of {nbPages}
+            </div>
+            {index === 0 && (
+              <a href={`/${slug}/page/2`} class="next">
+                Next
+              </a>
+            )}
+            {index > 0 && index < nbPages - 1 && (
+              <a href={index + 2} class="next">
+                Next
+              </a>
+            )}
+            {index === nbPages - 1 && <a />}
+          </div>
+        )}
       </div>
     )
   }

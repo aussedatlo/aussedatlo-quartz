@@ -35,6 +35,8 @@ export interface GlobalConfiguration {
    */
   baseUrl?: string
   theme: Theme
+  /** Max pages per tag/folder index page */
+  maxPerPage: number
 }
 
 export interface QuartzConfig {

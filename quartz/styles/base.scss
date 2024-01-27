@@ -511,3 +511,25 @@ ol.overflow {
     padding-left: 1rem;
   }
 }
+
+.see-more {
+  display: grid;
+  grid-template-columns: 10em 5em 10em;
+  justify-content: center;
+  margin-top: 50px;
+
+  & > .previous {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  & > .next {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  & > div {
+    display: flex;
+    justify-content: center;
+  }
+}

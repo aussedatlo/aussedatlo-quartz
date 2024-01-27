@@ -1,28 +1,19 @@
 import { QuartzComponentConstructor, QuartzComponentProps } from "../types"
-import path from "path"
 
 import style from "../styles/listPage.scss"
 import { PageList } from "../PageList"
-import { _stripSlashes, simplifySlug } from "../../util/path"
+import { _stripSlashes } from "../../util/path"
 import { Root } from "hast"
 import { pluralize } from "../../util/lang"
 import { htmlToJsx } from "../../util/jsx"
 
 function FolderContent(props: QuartzComponentProps) {
   const { tree, fileData, allFiles } = props
-  const folderSlug = _stripSlashes(simplifySlug(fileData.slug!))
-  const allPagesInFolder = allFiles.filter((file) => {
-    const fileSlug = _stripSlashes(simplifySlug(file.slug!))
-    const prefixed = fileSlug.startsWith(folderSlug) && fileSlug !== folderSlug
-    const folderParts = folderSlug.split(path.posix.sep)
-    const fileParts = fileSlug.split(path.posix.sep)
-    const isDirectChild = fileParts.length === folderParts.length + 1
-    return prefixed && isDirectChild
-  })
+  const { index, nbPages, nb } = props
 
   const listProps = {
     ...props,
-    allFiles: allPagesInFolder,
+    allFiles,
   }
 
   const content =
@@ -35,10 +26,39 @@ function FolderContent(props: QuartzComponentProps) {
       <article>
         <p>{content}</p>
       </article>
-      <p>{pluralize(allPagesInFolder.length, "item")} under this folder.</p>
+      <p>{pluralize(nb, "item")} under this folder.</p>
       <div>
         <PageList {...listProps} />
       </div>
+      {nbPages > 0 && (
+        <div class="see-more">
+          {index === 0 && <a />}
+          {index === 1 && index <= nbPages && (
+            <a href={"../"} class="previous">
+              Previous
+            </a>
+          )}
+          {index > 1 && index <= nbPages && (
+            <a href={index} class="previous">
+              Previous
+            </a>
+          )}
+          <div>
+            {index + 1} of {nbPages}
+          </div>
+          {index === 0 && index <= nbPages && (
+            <a href={`/${fileData.slug?.replace("/index", "")}/page/2`} class="next">
+              Next
+            </a>
+          )}
+          {index > 0 && index < nbPages - 1 && (
+            <a href={index + 2} class="next">
+              Next
+            </a>
+          )}
+          {index === nbPages - 1 && <a />}
+        </div>
+      )}
     </div>
   )
 }

@@ -70,27 +70,46 @@ export const TagPage: QuartzEmitterPlugin<FullPageLayout> = (userOpts) => {
 
       for (const tag of tags) {
         const slug = joinSegments("tags", tag) as FullSlug
-        const externalResources = pageResources(pathToRoot(slug), resources)
         const [tree, file] = tagDescriptions[tag]
-        const componentData: QuartzComponentProps = {
-          fileData: file.data,
-          externalResources,
-          cfg,
-          children: [],
-          tree,
-          allFiles,
+
+        const allFilesWithTag =
+          tag === "index"
+            ? allFiles
+            : allFiles.filter((file) => file.frontmatter?.tags.includes(tag)).reverse()
+        const nbPages = Math.ceil(allFilesWithTag.length / ctx.cfg.configuration.maxPerPage)
+
+        for (let index = 0; index < nbPages; index++) {
+          const startIndex = index * ctx.cfg.configuration.maxPerPage
+          const stopIndex =
+            tag === "index" ? allFilesWithTag.length : startIndex + ctx.cfg.configuration.maxPerPage
+          const fileSlug =
+            index === 0 ? file.data.slug! : (`${file.data.slug!}/page/${index + 1}` as FullSlug)
+          const externalResources = pageResources(pathToRoot(fileSlug), resources)
+
+          const componentData: QuartzComponentProps = {
+            fileData: file.data,
+            externalResources,
+            cfg,
+            children: [],
+            tree,
+            allFiles: allFilesWithTag.slice(startIndex, stopIndex),
+            index,
+            nbPages,
+            nb: allFilesWithTag.length,
+          }
+
+          const content = renderPage(slug, componentData, opts, externalResources)
+          const fp = await write({
+            ctx,
+            content,
+            slug: fileSlug,
+            ext: ".html",
+          })
+
+          fps.push(fp)
         }
-
-        const content = renderPage(slug, componentData, opts, externalResources)
-        const fp = await write({
-          ctx,
-          content,
-          slug: file.data.slug!,
-          ext: ".html",
-        })
-
-        fps.push(fp)
       }
+
       return fps
     },
   }

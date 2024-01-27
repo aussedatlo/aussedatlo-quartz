@@ -71,26 +71,38 @@ export const FolderPage: QuartzEmitterPlugin<FullPageLayout> = (userOpts) => {
 
       for (const folder of folders) {
         const slug = joinSegments(folder, "index") as FullSlug
-        const externalResources = pageResources(pathToRoot(slug), resources)
-        const [tree, file] = folderDescriptions[folder]
-        const componentData: QuartzComponentProps = {
-          fileData: file.data,
-          externalResources,
-          cfg,
-          children: [],
-          tree,
-          allFiles,
+        const allFolderFiles = allFiles.filter((file) => file.slug?.startsWith(folder)).reverse()
+        const nbPages = Math.ceil(allFolderFiles.length / ctx.cfg.configuration.maxPerPage)
+
+        for (let index = 0; index < nbPages; index++) {
+          const startIndex = index * ctx.cfg.configuration.maxPerPage
+          const stopIndex = startIndex + ctx.cfg.configuration.maxPerPage
+          const fileSlug =
+            index === 0 ? slug : (`${slug.replace("index", "")}/page/${index + 1}` as FullSlug)
+          const externalResources = pageResources(pathToRoot(fileSlug), resources)
+          const [tree, file] = folderDescriptions[folder]
+          const componentData: QuartzComponentProps = {
+            fileData: file.data,
+            externalResources,
+            cfg,
+            children: [],
+            tree,
+            allFiles: allFolderFiles.slice(startIndex, stopIndex),
+            index,
+            nbPages,
+            nb: allFolderFiles.length,
+          }
+
+          const content = renderPage(slug, componentData, opts, externalResources)
+          const fp = await write({
+            ctx,
+            content,
+            slug: fileSlug,
+            ext: ".html",
+          })
+
+          fps.push(fp)
         }
-
-        const content = renderPage(slug, componentData, opts, externalResources)
-        const fp = await write({
-          ctx,
-          content,
-          slug,
-          ext: ".html",
-        })
-
-        fps.push(fp)
       }
       return fps
     },
