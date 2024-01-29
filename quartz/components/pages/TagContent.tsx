@@ -80,11 +80,11 @@ function TagContent(props: QuartzComponentProps) {
         <div>
           <PageList {...listProps} />
         </div>
-        {nbPages > 0 && (
+        {nbPages > 1 && (
           <div class="see-more">
             {index === 0 && <a />}
             {index === 1 && (
-              <a href={"../"} class="previous">
+              <a href={`/${slug}`} class="previous">
                 Previous
               </a>
             )}

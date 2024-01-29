@@ -30,7 +30,7 @@ function FolderContent(props: QuartzComponentProps) {
       <div>
         <PageList {...listProps} />
       </div>
-      {nbPages > 0 && (
+      {nbPages > 1 && (
         <div class="see-more">
           {index === 0 && <a />}
           {index === 1 && index <= nbPages && (
