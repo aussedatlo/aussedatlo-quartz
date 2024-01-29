@@ -12,7 +12,7 @@ export default (() => {
     const path = url.pathname as FullSlug
     const baseDir = fileData.slug === "404" ? path : pathToRoot(fileData.slug!)
 
-    const iconPath = joinSegments(baseDir, "static/favicon.ico")
+    const iconPath = joinSegments("/static/favicon.ico")
 
     return (
       <head>
