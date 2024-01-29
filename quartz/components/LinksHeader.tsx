@@ -12,7 +12,11 @@ export default (() => {
         <div id="links-header">
           <span>
             <img src="/static/icons8-blog-96.png"></img>
-            <a href="/posts">Blog</a>
+            <a href="/posts">Posts</a>
+          </span>
+          <span>
+            <img src="/static/icons8-label-96.png"></img>
+            <a href="/tags">Tags</a>
           </span>
           <span>
             <img src="/static/icons8-octocat-96.png"></img>
