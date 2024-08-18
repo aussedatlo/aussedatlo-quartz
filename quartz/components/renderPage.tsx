@@ -220,7 +220,6 @@ export function renderPage(
               componentData.cfg.utterances?.repo &&
               slug !== "index" ? (
                 <div>
-                  {slug}
                   <hr />
                   <script
                     src="https://utteranc.es/client.js"
