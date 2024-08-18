@@ -7,6 +7,8 @@ import { FullSlug, RelativeURL, joinSegments, normalizeHastElement } from "../ut
 import { visit } from "unist-util-visit"
 import { Root, Element, ElementContent } from "hast"
 import { QuartzPluginData } from "../plugins/vfile"
+import RecentNotes from "./RecentNotes"
+import { PageList } from "./PageList"
 
 interface RenderComponents {
   head: QuartzComponent
@@ -214,9 +216,11 @@ export function renderPage(
                 </div>
               </div>
               <Content {...componentData} />
-
-              {componentData.fileData.filePath && componentData.cfg.utterances?.repo ? (
+              {componentData.fileData.filePath &&
+              componentData.cfg.utterances?.repo &&
+              slug !== "index" ? (
                 <div>
+                  {slug}
                   <hr />
                   <script
                     src="https://utteranc.es/client.js"
@@ -229,6 +233,19 @@ export function renderPage(
                 </div>
               ) : (
                 <div></div>
+              )}
+
+              {slug !== "posts/index" && slug !== "tags/index" && !slug.startsWith("tags/") && (
+                <>
+                  <hr />
+                  <h1>Recent Posts</h1>
+                  <PageList {...componentData} limit={3} />
+                  <div class="see-more-index">
+                    <a href={`/posts`} class="next">
+                      👉<span>See more</span>👈
+                    </a>
+                  </div>
+                </>
               )}
             </div>
 

@@ -30,7 +30,11 @@ type Props = {
 } & QuartzComponentProps
 
 export function PageList({ cfg, fileData, allFiles, limit }: Props) {
-  let list = allFiles.sort(byDateAndAlphabetical(cfg))
+  let list = allFiles
+    .sort(byDateAndAlphabetical(cfg))
+    .filter(
+      (file) => file.slug !== "experiences" && file.slug !== "projects" && file.slug !== "index",
+    )
   if (limit) {
     list = list.slice(0, limit)
   }

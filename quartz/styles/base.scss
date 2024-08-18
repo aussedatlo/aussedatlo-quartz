@@ -512,6 +512,22 @@ ol.overflow {
   }
 }
 
+.see-more-index {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.see-more-index > a > span {
+  margin: 1rem;
+  transition: all 0.2s ease;
+}
+
+.see-more-index > a > span:hover {
+  margin: 0.5rem;
+}
+
 .see-more {
   display: grid;
   grid-template-columns: 10em 5em 10em;
